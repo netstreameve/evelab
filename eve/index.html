@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <title>Exhibition Prototype</title>
+    <meta name="description" content="Exhibition">
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="js/blink-teleprtation.js"></script>
+    <script src="https://unpkg.com/super-hands@3.0.0/dist/super-hands.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
+    <script src="js/progressive-controls.js"></script>
+</head>
+
+<body>
+	<a-scene physics="gravity: -59.8; restitution: 0.7">
+        <a-assets>
+            <img id="exhibition-sky" src="img/360-panorama-matador-seo.jpg">
+            <img id="exhibition-sky2" src="img/360-panorama-outside-seo.jpg">
+            <img id="footsteps" src="img/footsteps.png">
+            <img id="black" src="img/black.jpg">
+
+            <a-asset-item id="booth" src="img/scene.gltf" ></a-asset-item>
+        </a-assets>
+
+        <a-entity gltf-model="#booth"></a-entity>
+
+        <a-image src="#black" position="10 194.9 -129" width="10" height="10" scale="11.5 7.3 11.5"></a-image>
+
+        <!-- 빨간박스 -->
+		<a-box color="#AA0000" position="-3 0.5 4" class="clickable"
+        blink-teleportation="pos: -2 0 4">
+        </a-box>
+
+
+        <!-- 초록박스 -->
+        <a-box color="#00AA00" position="3 0.5 4" class="clickable"
+        blink-teleportation="pos: 2 0 4; hide: true">
+        </a-box>
+ 
+        <!-- 블링크텔포 -->
+        <a-image src="#footsteps" position="-170 20 100" scale="40 40 40" rotation="90 0 180"look-at="#camera" class="clickable"
+          blink-teleportation="pos:-170 150 100; hide: true" opacity="0.6">
+        </a-image>
+
+        <a-image src="#footsteps" position="150 12 35" scale="42 42 42" rotation="90 0 0"look-at="#camera" class="clickable"
+          blink-teleportation="pos:150 120 15; hide: true" opacity="0.6">
+        </a-image>
+
+        <a-image src="#footsteps" position="10 20 -50" scale="42 42 42" rotation="90 0 180"look-at="#camera" class="clickable"
+          blink-teleportation="pos:10 150 -50; hide: true" opacity="0.6">
+        </a-image>
+ 
+        <!-- 파란박스 -->
+        <a-box color="#0077FF" position="3 0.5 -4">
+        </a-box>
+        <!-- 블링크텔포 -->
+        <a-image src="#footsteps" position="3 2.5 -4" look-at="#camera" class="clickable"
+          blink-teleportation="pos: 2 0 -4">
+        </a-image>
+
+		<!-- 카메라리그 -->
+		<a-entity id="cameraRig" position="10 150 100" >
+			<!-- Camera  wasd-controls-enabled="false"-->
+			<a-camera >
+                <a-cursor raycaster="objects: .ui, .clickable" ></a-cursor>
+			</a-camera>
+		</a-entity>
+        
+        <a-sphere color="#00AA00" radius="10" position="-50 200 0" grabbable
+                      dynamic-body="linearDamping: 0.05; mass: 0.01">
+        </a-sphere>
+
+        <a-box color="#AA0000" position="-50 40 0">
+            <a-box color="#AA0000" visible="true" scale="10 10 10" position="0 1 0"
+                   static-body>
+            </a-box>
+        </a-box>
+
+
+		<a-circle color="#EEEEEE" rotation="-90 0 0" radius="1.5" position="0 0 0"
+				  shader="flat">
+		</a-circle>
+		
+		<a-box id="yellow" color="#FFAA00" position="140 60 85" class="ui" rotation="0 -90 0" scale="15 15 15"
+			   animation__enter="property: material.color; from: #FFAA00; to: #FF7700; 
+								 startEvents: mouseenter; dur: 250; easing: linear"
+			   animation__leave="property: material.color; from: #FF7700; to: #FFAA00; 
+								 startEvents: mouseleave; dur: 250; easing: linear"
+        ></a-box>
+
+
+        <a-box color="#FFFFFF" position="-150 110 0" rotation="0 -90 0" scale="12 12 12" static-body
+        static-body="shape: sphere; sphereRadius: 1"
+        event-set__color="_event: collide; material.color: #0055AA"
+        animation="property: rotation; to: 0 360 0; loop: true; dur: 3000">
+        </a-box>
+
+        
+        <a-box id="yellow" color="#FF2100" position="160 55 85" class="ui" rotation="0 -90 0" scale="10 10 10"
+			   animation__enter="property: material.color; from: #FF2100; to: #FE2; 
+								 startEvents: mouseenter; dur: 250; easing: linear"
+			   animation__leave="property: material.color; from: #FE2; to: #FF2100; 
+								 startEvents: mouseleave; dur: 250; easing: linear"
+        ></a-box>
+        
+
+        <a-box id="yellow" color="#FFAA00" position="-110 165 -115" class="ui" rotation="0 -90 0" scale="15 15 15"
+			   animation__enter="property: material.color; from: #FFAA00; to: #FF7700; 
+								 startEvents: mouseenter; dur: 250; easing: linear"
+			   animation__leave="property: material.color; from: #FF7700; to: #FFAA00; 
+								 startEvents: mouseleave; dur: 250; easing: linear"
+			   event-set__scale="_target: #blue; _event: click;
+			   					 animation.property: scale;
+			   					 animation.to: 15 15 15;
+			   					 animation.easing: easeInOutBack;
+			   					 animation.dur: 1000"
+			   event-set__position="_target: #grey; _event: click;
+			   						animation.property: position;
+			   						animation.to: -145 185 -115;
+                                    animation.dur: 1000"></a-box>
+
+        
+    
+		<!-- 파란박스(서랍) -->
+		<a-box id="blue" color="#00AAFF" position="-145 165 -115" opacity="1" rotation="0 -90 0" scale="1 1 1"></a-box>
+		<!-- 파란박스 버튼 -->
+		<a-plane id="grey" color="#FFFFFF" position="-145 165 -115" scale="5 10 5" class="ui" rotation="0 0 0"
+			 	 animation__enter="property: material.color; from: #FFFFFF; to: #FF0000; 
+								   startEvents: mouseenter; dur: 250; easing: linear"
+			     animation__leave="property: material.color; from: #FF0000; to: #FFFFFF; 
+								   startEvents: mouseleave; dur: 250; easing: linear"
+				 event-set__position="_event: click;
+			   						  animation.to: -145 165 -115;
+			   						  animation.dur: 250"
+				 event-set__scale="_target: #blue; _event: click;
+			   					   animation.to: 10 15 10;
+			   					   animation.easing: easeOutExpo;
+			   					   animation.dur: 1500">
+		</a-plane>
+	</a-scene>
+</body>
+</html>
