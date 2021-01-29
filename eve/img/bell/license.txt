@@ -1,0 +1,11 @@
+Model Information:
+* title:	Boxing Bell
+* source:	https://sketchfab.com/3d-models/boxing-bell-61a2e9b007f141efb2b4b087cb1732c2
+* author:	321_Blender (https://sketchfab.com/321_Blender)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Boxing Bell" (https://sketchfab.com/3d-models/boxing-bell-61a2e9b007f141efb2b4b087cb1732c2) by 321_Blender (https://sketchfab.com/321_Blender) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

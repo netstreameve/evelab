@@ -12,33 +12,87 @@
     <script src="https://unpkg.com/super-hands@3.0.0/dist/super-hands.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
     <script src="js/progressive-controls.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.0.2/dist/aframe-extras.min.js"></script>
+    <script>
+      AFRAME.registerComponent('play-pause', {
+        init: function () {
+          var myVideo = document.querySelector('#netStream');
+          var videoControls = document.querySelector('#videoControls');
+          this.el.addEventListener('click', function () {
+            if (myVideo.paused) {
+              myVideo.play();
+              videoControls.setAttribute('src', '#pause');
+            } else {
+              myVideo.pause();
+              videoControls.setAttribute('src', '#play');
+            }
+          });
+        }
+      });
+    </script>
+
+
 </head>
 
 <body>
-	<a-scene physics="gravity: -59.8; restitution: 0.7">
+	<a-scene physics="gravity: -200; restitution: 0.7" vr-mode-ui="flase" ar-mode-ui="flase" shadow="autoUpdate: true; type:pcfsoft" renderer="colorManagement: true; antialias: true">
         <a-assets>
             <img id="exhibition-sky" src="img/360-panorama-matador-seo.jpg">
             <img id="exhibition-sky2" src="img/360-panorama-outside-seo.jpg">
             <img id="footsteps" src="img/footsteps.png">
             <img id="black" src="img/black.jpg">
+            <img id="white" src="img/white.jpg">
+            <img id="freetalk" src="img/freetalk.jpg">
+            <img id="poster" src="img/poster.jpg">
+            <img id="dalgonaimg" src="img/dalgona.jpg">
+            <audio id="dalgonaaudio" src="img/Casual - Main Theme (Loop).wav"></audio>
+            <img id="play" src="img/play.png">
+        	  <img id="pause" src="img/pause.png">
+            <video id="netStream" src="img/NetStream.mp4" loop="true"></video>
+            
 
-            <a-asset-item id="booth" src="img/scene.gltf" ></a-asset-item>
+            <a-asset-item id="bear" src="img/bear/scene.gltf"></a-asset-item>
+            <a-asset-item id="banana" src="img/banana.glb"></a-asset-item>
+            <a-asset-item id="booth" src="img/scene/scene.gltf" ></a-asset-item>
+            <a-asset-item id="basket" src="img/basket/scene.gltf" ></a-asset-item>
         </a-assets>
 
+
+        <a-video src="#netStream" width="8" height="4.5" position="10.192 194.5 -128.409" scale="14.030 16.3 1">
+          <!-- Play/Pause -->
+          <a-image id="videoControls" src="#play" position="0 -3 0" scale="0.5 0.5 1"
+               play-pause>
+          </a-image>
+        </a-video>
+
+        <a-entity gltf-model="#basket"  position="-200.107 105.483 -8.524" scale="7 7 7" rotation="0 -13.880 0"></a-entity>
+        <a-entity gltf-model="#bear" position="-109.803 119.171 -113.017" scale="2 2 2" class="ui"
+        event-set__scale="_event: click;
+			   					 animation.property: scale;
+			   					 animation.to: 3 3 3;
+			   					 animation.easing: easeInOutBack;
+			   					 animation.dur: 1000"
+        ></a-entity>
+        <a-entity gltf-model="#bear" position="-146.437 119.171 -113.017" scale="2 2 2" class="ui"
+        event-set__scale="_event: click;
+			   					 animation.property: scale;
+			   					 animation.to: 1 1 1;
+			   					 animation.easing: easeInOutBack;
+			   					 animation.dur: 1000"
+        ></a-entity>
+
         <a-entity gltf-model="#booth"></a-entity>
+        <a-entity gltf-model="#banana" position="-172.229 105.569 -2.597" scale="1.5 1.5 1.5" class="ui"
+        static-body="shape: sphere; sphereRadius: 1"
+        animation__enter="property: rotation; startEvents: mouseenter; to: 0 360 0; loop: true; dur: 1500"
+        animation__leave="property: rotation; startEvents: mouseleave; to: 0 19.274 0;"></a-entity>
 
-        <a-image src="#black" position="10 194.9 -129" width="10" height="10" scale="11.5 7.3 11.5"></a-image>
-
-        <!-- 빨간박스 -->
-		<a-box color="#AA0000" position="-3 0.5 4" class="clickable"
-        blink-teleportation="pos: -2 0 4">
-        </a-box>
-
-
-        <!-- 초록박스 -->
-        <a-box color="#00AA00" position="3 0.5 4" class="clickable"
-        blink-teleportation="pos: 2 0 4; hide: true">
-        </a-box>
+        <a-image src="#black" position="10 93.367 -133.575" width="10" height="10" scale="11.5 7.3 11.5"></a-image>
+        <a-image src="#white" position="195.148 150.384 -47.192" width="10" height="10" scale="17 10 1"></a-image>
+        <a-image src="#freetalk" position="-281.005 160.475 -44.704" width="10" height="10" scale="11 8 1" rotation="0 90 0"></a-image>
+        <a-image src="#poster" position="272.035 150.015 87.581" width="10" height="10" scale="7.890 9.570 1" rotation="0 270 0"></a-image>
+        <a-image src="#dalgonaimg" position="-271.398 154.932 69.414" width="10" height="10" scale="7.690 8.660 1" rotation="0 90 0"
+        sound="src: #dalgonaaudio; on: click; volume: 15; refDistance: 4; rolloffFactor: 4"></a-image>
  
         <!-- 블링크텔포 -->
         <a-image src="#footsteps" position="-170 20 100" scale="40 40 40" rotation="90 0 180"look-at="#camera" class="clickable"
@@ -52,51 +106,45 @@
         <a-image src="#footsteps" position="10 20 -50" scale="42 42 42" rotation="90 0 180"look-at="#camera" class="clickable"
           blink-teleportation="pos:10 150 -50; hide: true" opacity="0.6">
         </a-image>
- 
-        <!-- 파란박스 -->
-        <a-box color="#0077FF" position="3 0.5 -4">
-        </a-box>
-        <!-- 블링크텔포 -->
-        <a-image src="#footsteps" position="3 2.5 -4" look-at="#camera" class="clickable"
-          blink-teleportation="pos: 2 0 -4">
-        </a-image>
 
 		<!-- 카메라리그 -->
-		<a-entity id="cameraRig" position="10 150 100" >
+		<a-entity id="cameraRig" position="10 150 100" progressive-controls >
 			<!-- Camera  wasd-controls-enabled="false"-->
-			<a-camera >
+			<a-camera id="cam" >
                 <a-cursor raycaster="objects: .ui, .clickable" ></a-cursor>
 			</a-camera>
 		</a-entity>
         
-        <a-sphere color="#00AA00" radius="10" position="-50 200 0" grabbable
-                      dynamic-body="linearDamping: 0.05; mass: 0.01">
+        <a-sphere color="#FFFFFF" radius="10" position="-112.867 136.051 0" grabbable
+                  dynamic-body="linearDamping: 0.09; mass: 1">
         </a-sphere>
 
-        <a-box color="#AA0000" position="-50 40 0">
-            <a-box color="#AA0000" visible="true" scale="10 10 10" position="0 1 0"
+            <a-box color="#AA0000" opacity="0.00001" visible="false" scale="700 1 300" position="0 10.425 7.153"
                    static-body>
             </a-box>
-        </a-box>
+            <a-box color="#AA0000" opacity="0.00001" visible="false" scale="151.420 100 100" position="-177.283 55.137 -2.984"
+                   static-body>
+            </a-box>
+            <a-box color="#AA0000" opacity="0.00001" visible="false" scale="700 1 300" position="0 160.266 -107.505" rotation="90 0 0"
+                   static-body>
+            </a-box>
+            <a-box color="#AA0000" opacity="0.00001" visible="false" scale="300 1 300" position="103.788 139.182 -7.444" rotation="0 0 90"
+                   static-body>
+            </a-box>
+            <a-box color="#AA0000" opacity="0.00001" visible="false" scale="700 1 350" position="0 171.946 150.089" rotation="90 0 0"
+                   static-body>
+            </a-box>
+            <a-box color="#AA0000" opacity="0.00001" visible="false" scale="700 1 300" position="0 284.456 0"
+                   static-body>
+            </a-box>
+            <a-box color="#AA0000" opacity="0.00001" visible="false" scale="300 1 300" position="-263.458 154.598 0" rotation="0 0 90"
+                   static-body>
+            </a-box>
 
 
 		<a-circle color="#EEEEEE" rotation="-90 0 0" radius="1.5" position="0 0 0"
 				  shader="flat">
 		</a-circle>
-		
-		<a-box id="yellow" color="#FFAA00" position="140 60 85" class="ui" rotation="0 -90 0" scale="15 15 15"
-			   animation__enter="property: material.color; from: #FFAA00; to: #FF7700; 
-								 startEvents: mouseenter; dur: 250; easing: linear"
-			   animation__leave="property: material.color; from: #FF7700; to: #FFAA00; 
-								 startEvents: mouseleave; dur: 250; easing: linear"
-        ></a-box>
-
-
-        <a-box color="#FFFFFF" position="-150 110 0" rotation="0 -90 0" scale="12 12 12" static-body
-        static-body="shape: sphere; sphereRadius: 1"
-        event-set__color="_event: collide; material.color: #0055AA"
-        animation="property: rotation; to: 0 360 0; loop: true; dur: 3000">
-        </a-box>
 
         
         <a-box id="yellow" color="#FF2100" position="160 55 85" class="ui" rotation="0 -90 0" scale="10 10 10"
@@ -119,27 +167,84 @@
 			   					 animation.dur: 1000"
 			   event-set__position="_target: #grey; _event: click;
 			   						animation.property: position;
-			   						animation.to: -145 185 -115;
-                                    animation.dur: 1000"></a-box>
+                     animation.to: -144.103 204.974 -109.407;
+                                    animation.dur: 1000">
+                                  </a-box>
 
         
     
 		<!-- 파란박스(서랍) -->
 		<a-box id="blue" color="#00AAFF" position="-145 165 -115" opacity="1" rotation="0 -90 0" scale="1 1 1"></a-box>
 		<!-- 파란박스 버튼 -->
-		<a-plane id="grey" color="#FFFFFF" position="-145 165 -115" scale="5 10 5" class="ui" rotation="0 0 0"
-			 	 animation__enter="property: material.color; from: #FFFFFF; to: #FF0000; 
-								   startEvents: mouseenter; dur: 250; easing: linear"
-			     animation__leave="property: material.color; from: #FF0000; to: #FFFFFF; 
-								   startEvents: mouseleave; dur: 250; easing: linear"
+		<a-image id="grey" src="#dalgonaimg" position="-145 165 -115" scale="3 3 1" width="10" height="10" class="ui" rotation="0 0 0"
 				 event-set__position="_event: click;
 			   						  animation.to: -145 165 -115;
-			   						  animation.dur: 250"
+                       animation.dur: 250"
+        event-set__scale="_event: click; animation.to: 1 1 1; animation.easing: easeOutExpo; animation.dur:1500"              
 				 event-set__scale="_target: #blue; _event: click;
 			   					   animation.to: 10 15 10;
 			   					   animation.easing: easeOutExpo;
-			   					   animation.dur: 1500">
-		</a-plane>
+                      animation.dur: 1500"></a-image>
+                      
+                      <a-box color="#AA0000"
+               position="0 4 0"
+               animation="property: rotation;
+                          to: 0 360 0;
+                          loop: true;
+                          dur: 5000;
+                          easing: linear">
+        </a-box>
+
+        <!-- Moving Box -->
+        <!-- ALl the new easing functions are available here:
+             https://aframe.io/docs/1.0.0/components/animation.html#easings -->
+        <a-box color="#AAFFAA" scale="5 5 5"
+               position="144.825 75.558 83.265"
+               animation="property: position;
+                          from: 140.825 55.558 83.265;
+                          to: 140.825 90.558 83.265;
+                          loop: true;
+                          dir: alternate;
+                          dur: 2000;
+                          easing: easeInOutCubic">
+        </a-box>
+        <a-box color="#FFAA00"
+               position="120.825 60.558 83.265"
+               animation="property: scale;
+                          to: 5 5 5;
+                          loop: true;
+                          dir: alternate;
+                          dur: 2000;
+                          easing: easeInOutElastic">
+        </a-box>
+
+        <!-- Animated Color -->
+        <a-sphere color="#0000AA"
+                  radius="3"
+                  position="130.825 55.558 83.265"
+                  scale="1 1 1"
+                  animation="property: material.color;
+                             from: #00AAFF;
+                             to: #0000AA;
+                             loop: true;
+                             dir: alternate;
+                             dur: 1500">
+        </a-sphere>
+
+        <!-- Animated Opacity -->
+        <a-cone color="#484848"
+                position="144.825 55.558 83.265"
+                scale="3 3 3"
+                animation="property: opacity;
+                           from: 1;
+                           to: 0;
+                           loop: true;
+                           dir: alternate;
+                           dur: 1500">
+        </a-cone>
+    
+
+
 	</a-scene>
 </body>
 </html>
